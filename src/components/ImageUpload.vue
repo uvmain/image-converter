@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { ref} from 'vue'
+
 const imageUrl = ref<string | null>(null);
-const inputSize = ref<number>(800);
+const imageSize = ref<number>(800);
 
 function onFileChange(event: Event) {
   const file = (event.target as HTMLInputElement).files?.[0];
@@ -16,7 +16,7 @@ function onFileChange(event: Event) {
 </script>
 
 <template>
-  <div class="flex flex-row gap-10">
+  <div class="flex flex-col gap-10 bg-zinc-900 text-light p-4">
     <div>
       <input 
         type="file" 
@@ -28,27 +28,29 @@ function onFileChange(event: Event) {
         <img 
           :src="imageUrl" 
           alt="Uploaded Image" 
-          class="rounded-lg shadow-md"
-          :style="{ maxWidth: `${inputSize}px`, maxHeight: `${inputSize}px` }"
+          class="rounded-lg shadow-md max-w-800px"
         />
       </div>
     </div>
     <div class="flex flex-col gap-4">
       <input
-          v-model="inputSize"
-          type="range"
-          min="100"
-          max="2000"
-          step="100"
-          class="w-100%"
-        >
+        v-model="imageSize"
+        type="range"
+        min="100"
+        max="2000"
+        step="100"
+        class="w-full"
+      >
       <div>
+        Maximum width/height: {{ imageSize }}px
       </div>
-      <div class="grid grid-cols-2 grid-rows-2 h-20 gap-4">
-        <button class="bg-gray-200 rounded-lg p-2 hover:bg-gray-300">WebP</button>
-        <button class="bg-gray-200 rounded-lg p-2 hover:bg-gray-300">JPEG</button>
-        <button class="bg-gray-200 rounded-lg p-2 hover:bg-gray-300">PNG</button>
-        <button class="bg-gray-200 rounded-lg p-2 hover:bg-gray-300">AVIF</button>
+      <div class="flex justify-center">
+        <div class="grid grid-cols-2 grid-rows-2 gap-4 w-48">
+          <button class="bg-gray-200 rounded-lg p-2 hover:bg-gray-300 text-dark">WebP</button>
+          <button class="bg-gray-200 rounded-lg p-2 hover:bg-gray-300 text-dark">JPEG</button>
+          <button class="bg-gray-200 rounded-lg p-2 hover:bg-gray-300 text-dark">PNG</button>
+          <button class="bg-gray-200 rounded-lg p-2 hover:bg-gray-300 text-dark">AVIF</button>
+        </div>
       </div>
     </div>
   </div>
