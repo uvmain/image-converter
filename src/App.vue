@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 
 const imageUrl = ref<string | null>(null);
 const imageSize = ref<number>(800);
@@ -8,7 +8,7 @@ const fileName = ref<string | undefined>('');
 function onFileChange(event: Event) {
   const target = event.target as HTMLInputElement;
   const file = target.files?.[0];
-  fileName.value = file?.name
+  fileName.value = file?.name;
   if (file) {
     const reader = new FileReader();
     reader.onload = () => {
@@ -52,44 +52,53 @@ function downloadImage(format: string) {
 
 const outputFileName = computed(() => {
   return encodeURI(fileName.value?.replaceAll(' ','_').toLocaleLowerCase() || '').replace(/\.[^/.]+$/, "")
-})
+});
 </script>
 
 <template>
-  <div class="flex flex-col gap-10 bg-zinc-900 text-light p-4">
-    <div>
+  <div class="flex flex-col items-center gap-10 bg-zinc-900 text-light p-6 min-h-screen">
+    <div class="w-full max-w-md">
       <input 
         type="file" 
         @change="onFileChange" 
         accept="image/*"
-        class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none"
+        id="fileInput"
+        class="hidden"
       />
+      <label 
+        for="fileInput" 
+        class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none p-2 text-center hover:bg-gray-200"
+      >
+        Browse
+      </label>
       <div v-if="imageUrl" class="mt-4">
         <img 
           :src="imageUrl" 
           alt="Uploaded Image" 
-          class="rounded-lg shadow-md max-w-800px"
+          class="rounded-lg shadow-md w-full object-contain"
         />
       </div>
     </div>
-    <div class="flex flex-col gap-4">
+    <div class="w-full max-w-md flex flex-col gap-4">
       <input
         v-model="imageSize"
         type="range"
         min="100"
         max="2000"
         step="100"
-        class="w-full"
+        class="w-full appearance-none bg-gray-300 rounded-lg h-2 focus:outline-none focus:ring-2 focus:ring-blue-600"
       >
-      <div>
-        Maximum width/height: {{ imageSize }}px
+      <div class="text-center">
+        <span class="text-gray-400">
+          Maximum width/height:
+        </span>
+        {{ imageSize }}px
       </div>
-      {{ outputFileName }}
-      <div class="flex justify-center">
+      <div class="flex justify-center mt-4">
         <div class="flex flex-row gap-4">
-          <button @click="downloadImage('webp')" class="bg-gray-200 rounded-lg p-2 hover:bg-gray-300 text-dark">WebP</button>
-          <button @click="downloadImage('jpeg')" class="bg-gray-200 rounded-lg p-2 hover:bg-gray-300 text-dark">JPEG</button>
-          <button @click="downloadImage('png')" class="bg-gray-200 rounded-lg p-2 hover:bg-gray-300 text-dark">PNG</button>
+          <button @click="downloadImage('webp')" class="bg-blue-600 text-white rounded-lg px-4 py-2 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500">WebP</button>
+          <button @click="downloadImage('jpeg')" class="bg-green-600 text-white rounded-lg px-4 py-2 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500">JPEG</button>
+          <button @click="downloadImage('png')" class="bg-red-600 text-white rounded-lg px-4 py-2 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500">PNG</button>
         </div>
       </div>
     </div>
