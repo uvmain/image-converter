@@ -19,6 +19,7 @@ export default defineConfig({
       imports: [
         'vue',
         'vue-router',
+        'vue/macros',
       ],
       dts: true,
     }),

@@ -5,6 +5,7 @@
     "tailwindcss",
     "tsbuildinfo",
     "unocss",
+    "unplugin",
     "Vite"
   ]
 }
