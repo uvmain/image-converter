@@ -56,49 +56,56 @@ const outputFileName = computed(() => {
 </script>
 
 <template>
-  <div class="flex flex-col items-center gap-10 bg-zinc-900 text-light p-6 min-h-screen">
-    <div class="w-full max-w-md">
-      <input 
-        type="file" 
-        @change="onFileChange" 
-        accept="image/*"
-        id="fileInput"
-        class="hidden"
-      />
-      <label 
-        for="fileInput" 
-        class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none p-2 text-center hover:bg-gray-200"
-      >
-        Browse
-      </label>
-      <div v-if="imageUrl" class="mt-4">
-        <img 
-          :src="imageUrl" 
-          alt="Uploaded Image" 
-          class="rounded-lg shadow-md w-full object-contain"
+  <div class="bg-light text-gray-700 min-h-screen min-w-screen">
+    <div class="flex flex-col items-center gap-10 p-6">
+      <div class="w-md flex flex-col gap-2">
+        <input 
+          type="file" 
+          @change="onFileChange" 
+          accept="image/*"
+          id="fileInput"
+          class="hidden"
         />
+        <label 
+          for="fileInput" 
+          class="block text-sm text-gray-700 border-1 border-solid border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none p-2 text-center hover:bg-gray-200"
+        >
+          Browse
+        </label>
+        <div v-if="fileName">
+          {{ fileName }}
+        </div>
+        <div v-if="imageUrl" class="mt-4">
+          <img 
+            :src="imageUrl" 
+            alt="Uploaded Image" 
+            class="rounded-lg shadow-md w-full object-contain"
+          />
+        </div>
       </div>
-    </div>
-    <div class="w-full max-w-md flex flex-col gap-4">
-      <input
-        v-model="imageSize"
-        type="range"
-        min="100"
-        max="2000"
-        step="100"
-        class="w-full appearance-none bg-gray-300 rounded-lg h-2 focus:outline-none focus:ring-2 focus:ring-blue-600"
-      >
-      <div class="text-center">
-        <span class="text-gray-400">
-          Maximum width/height:
-        </span>
-        {{ imageSize }}px
-      </div>
-      <div class="flex justify-center mt-4">
-        <div class="flex flex-row gap-4">
-          <button @click="downloadImage('webp')" class="bg-blue-600 text-white rounded-lg px-4 py-2 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500">WebP</button>
-          <button @click="downloadImage('jpeg')" class="bg-green-600 text-white rounded-lg px-4 py-2 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500">JPEG</button>
-          <button @click="downloadImage('png')" class="bg-red-600 text-white rounded-lg px-4 py-2 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500">PNG</button>
+      <div class="w-full flex flex-col gap-4 w-md">
+        <input
+          v-model="imageSize"
+          type="range"
+          min="100"
+          max="2000"
+          step="100"
+          class="w-full appearance-none bg-gray-300 rounded-lg h-2 focus:outline-none focus:ring-2 focus:ring-blue-600"
+        >
+        <div class="text-center">
+          <span class="text-gray-400">
+            Maximum width/height:
+          </span>
+          <span class="text-gray-700">
+            {{ imageSize }}px
+          </span>
+        </div>
+        <div class="flex justify-center mt-4">
+          <div class="flex flex-row gap-4">
+            <button @click="downloadImage('webp')" class="bg-blue-600 text-white rounded-lg px-4 py-2 hover:bg-blue-700 outline-none focus:ring-2 focus:ring-blue-500">WebP</button>
+            <button @click="downloadImage('jpeg')" class="bg-green-600 text-white rounded-lg px-4 py-2 hover:bg-green-700 outline-none focus:ring-2 focus:ring-green-500">JPEG</button>
+            <button @click="downloadImage('png')" class="bg-red-600 text-white rounded-lg px-4 py-2 hover:bg-red-700 outline-none focus:ring-2 focus:ring-red-500">PNG</button>
+          </div>
         </div>
       </div>
     </div>
