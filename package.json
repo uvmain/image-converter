@@ -14,12 +14,9 @@
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^5.0.5",
-    "autoprefixer": "^10.4.19",
     "cspell": "^8.9.1",
     "typescript": "^5.2.2",
     "unocss": "^0.61.0",
-    "unplugin-auto-import": "^0.17.6",
-    "unplugin-vue-components": "^0.27.2",
     "vite": "^5.3.1",
     "vue-tsc": "^2.0.21"
   }
